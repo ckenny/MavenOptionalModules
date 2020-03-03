@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>MavenOptionalModules</artifactId>
+        <groupId>com.study.maven</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>war</packaging>
+
+    <artifactId>rest-api</artifactId>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mainclass>com.study.BootWebApplication</mainclass>
+        <relative-top-level>..</relative-top-level>
+        <all-target-copy-directory>classes</all-target-copy-directory>
+        <proguard.version>6.2.2.1</proguard.version>
+        <proguard.maven.plugin>2.2.0</proguard.maven.plugin>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>Product-With-Feature-One</id>
+            <dependencies>
+                <dependency>
+                    <groupId>com.study.maven</groupId>
+                    <artifactId>core</artifactId>
+                    <version>${app.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>com.study.maven</groupId>
+                    <artifactId>feature-one</artifactId>
+                    <version>${app.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <phase>generate-sources</phase>
+                                <configuration>
+                                    <target name="module-classes">
+                                        <copy todir="${project.build.directory}\${all-target-copy-directory}" overwrite="true">
+                                            <fileset dir="${relative-top-level}/core/target/classes" />
+                                            <fileset dir="${relative-top-level}/feature-one/target/classes" />
+                                        </copy>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>Product-With-Feature-Two</id>
+            <dependencies>
+                <dependency>
+                    <groupId>com.study.maven</groupId>
+                    <artifactId>core</artifactId>
+                    <version>${app.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>com.study.maven</groupId>
+                    <artifactId>feature-two</artifactId>
+                    <version>${app.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <phase>generate-sources</phase>
+                                <configuration>
+                                    <target name="module-classes">
+                                        <copy todir="${project.build.directory}\${all-target-copy-directory}" overwrite="true">
+                                            <fileset dir="${relative-top-level}/core/target/classes" />
+                                            <fileset dir="${relative-top-level}/feature-two/target/classes" />
+                                        </copy>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>Product-All-Features</id>
+            <dependencies>
+                <dependency>
+                    <groupId>com.study.maven</groupId>
+                    <artifactId>core</artifactId>
+                    <version>${app.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>com.study.maven</groupId>
+                    <artifactId>feature-one</artifactId>
+                    <version>${app.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>com.study.maven</groupId>
+                    <artifactId>feature-two</artifactId>
+                    <version>${app.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <phase>generate-sources</phase>
+                                <configuration>
+                                    <target name="module-classes">
+                                        <copy todir="${project.build.directory}\${all-target-copy-directory}" overwrite="true">
+                                            <fileset dir="${relative-top-level}/core/target/classes" />
+                                            <fileset dir="${relative-top-level}/feature-one/target/classes" />
+                                            <fileset dir="${relative-top-level}/feature-two/target/classes" />
+                                        </copy>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <!-- Import dependency management from Spring Boot -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.2.4.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!--
+             This plugin executes 3 java goals to generate dictionary text files to use as inputs in obfuscation.
+             The process-classes phase makes new dictionary files, so that obfuscation will use unique and different
+             names all time.
+             -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <id>members-dictionary-generator</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>com.study.packaging.DictionaryGenerator</mainClass>
+                            <arguments>
+                                <!-- text file with full path-->
+                                <argument>${project.build.directory}/members-dictionary.txt</argument>
+                                <!--
+                                Number of lines for unique random strings.
+                                Put this number above the number of total members from all classes
+                                in project expected to be obfuscated. Generally it will be high...!
+                                -->
+                                <argument>500</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>classes-dictionary-generator</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>com.study.packaging.DictionaryGenerator</mainClass>
+                            <arguments>
+                                <!-- text file with full path-->
+                                <argument>${project.build.directory}/classes-dictionary.txt</argument>
+                                <!--
+                                Number of lines for unique random strings.
+                                Put this number above the number of total classes in project expected to be obfuscated.
+                                -->
+                                <argument>100</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>packages-dictionary-generator</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>com.study.packaging.DictionaryGenerator</mainClass>
+                            <arguments>
+                                <!-- text file with full path-->
+                                <argument>${project.build.directory}/packages-dictionary.txt</argument>
+                                <!--
+                                Number of lines for unique random strings.
+                                Put this number above the number of total packages in project expected to be obfuscated.
+                                Generally it will be low...!
+                                -->
+                                <argument>50</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- This is a ProGuard plugin to obfuscate classes first and then use them in packaging WAR -->
+            <plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <version>${proguard.maven.plugin}</version>
+                <configuration>
+                    <injar>classes</injar>
+                    <outjar>proguardClasses</outjar>
+                    <obfuscate>true</obfuscate>
+                    <options>
+                        <option>-dontshrink</option>
+                        <option>-dontoptimize</option>
+
+                        <!-- This option will club all the classes in given package and then after obfuscate them all.
+                             In case if any class is looking for resource files based on their package directory will not work after this. -->
+<!--                        <option>-repackageclasses com.study.all</option>-->
+
+                        <!-- This option will replace all strings in reflections method invocations with new class names.
+                             For example, invokes Class.forName('className')-->
+                        <option>-adaptclassstrings</option>
+
+                        <!-- This option will update content of given resource file(s) with obfuscated class names -->
+                        <option>-adaptresourcefilecontents **.properties</option>
+
+                        <!-- This option will save all original annotations and etc. Otherwise all we be removed from files.-->
+                        <option>-keepattributes
+                            Exceptions,
+                            InnerClasses,
+                            Signature,
+                            Deprecated,
+                            SourceFile,
+                            LineNumberTable,
+                            *Annotation*,
+                            EnclosingMethod
+                        </option>
+                        <!-- This option will save all original names in interfaces (without obfuscate).-->
+                        <!--                        <option>-keepnames interface **</option>-->
+                        <!-- This option will save all original methods parameters in files defined in -keep sections,
+                             otherwise all parameter names will be obfuscate.-->
+                        <option>-keepparameternames</option>
+                        <!-- This option will save all original class files (without obfuscate) but obfuscate all
+                             in domain and service packages.-->
+                        <option>-keep
+                            class com.study.BootWebApplication
+                            extends org.springframework.boot.web.servlet.support.SpringBootServletInitializer {
+                            public static void main(java.lang.String[]);
+                            }
+                        </option>
+                        <!-- This option ignore warnings such as duplicate class definitions and classes in incorrectly
+                            named files-->
+                        <option>-ignorewarnings</option>
+                        <!-- This option will save all original class files (without obfuscate) in service package-->
+                        <!--<option>-keep class com.slm.proguard.example.spring.boot.service { *; }</option>-->
+                        <!-- This option will save all original interfaces files (without obfuscate) in all packages.-->
+                        <!--                        <option>-keep interface * extends * { *; }</option>-->
+                        <!-- This option will save all original defined annotations in all class in all packages.-->
+                        <option>-keepclassmembers class * {
+                            @org.springframework.beans.factory.annotation.Autowired *;
+                            @org.springframework.beans.factory.annotation.Value *;
+                            }
+                        </option>
+                        <option>-keep class com.study.packaging.** { *; }</option>
+                        <option>-keep class com.study.pojo.** { *; }</option>
+
+                        <option>-dontresetmembernaming</option>
+                        <option>-dontresetclassnaming</option>
+                        <option>-dontresetpackagenaming</option>
+                        <option>-obfuscationdictionary '${project.build.directory}/members-dictionary.txt'</option>
+                        <option>-classobfuscationdictionary '${project.build.directory}/classes-dictionary.txt'</option>
+                        <option>-packageobfuscationdictionary '${project.build.directory}/packages-dictionary.txt'</option>
+                        <option>-dontwarn java.**</option>
+                        <option>-dontwarn javax.**</option>
+                        <option>-dontwarn org.springframework.**</option>
+
+                    </options>
+                    <injarNotExistsSkip>true</injarNotExistsSkip>
+                    <libs>
+                        <!--Put here your libraries if required-->
+<!--                        <lib>D:\Java\jdk-11.0.2\lib\src.zip</lib>-->
+                    </libs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!-- Dont worry about compiler error. For first time, change this value to package so that plugin installs successfully. -->
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>proguard</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sf.proguard</groupId>
+                        <artifactId>proguard-base</artifactId>
+                        <version>${proguard.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+<!--                    <warName>${project.name}-${project.version}</warName>-->
+                    <warSourceDirectory>WebContent</warSourceDirectory>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <!-- Exclude your default packages from war packaging. Do not include "**" in double quotes in actual code   -->
+                    <packagingExcludes>
+                        WEB-INF/classes/com/study/packaging/,
+                        WEB-INF/classes/com/study/feature/,
+                        WEB-INF/classes/com/study/controller/,
+                        WEB-INF/classes/com/study/configs/
+                    </packagingExcludes>
+
+                    <webResources>
+                        <webResource>
+                            <directory>${project.build.directory}/proguardClasses</directory>
+                            <targetPath>WEB-INF/classes</targetPath>
+                        </webResource>
+                    </webResources>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
